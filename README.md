@@ -20,19 +20,19 @@ testar o _thinker_ dessa forma.
   mkdir projeto_ia
   cd projeto_ia
   git clone --recurse-submodules https://github.com/VideojogosLusofona/color-shape-links-ai-competition.git
-  mkdir my_thinker_repository
-  cd my_thinker_repository
+  mkdir my_thinker
+  cd my_thinker
   git init
   ```
 * Neste momento a estrutura de pastas é a seguinte, estando nós dentro da pasta
-  `my_thinker_repository`:
+  `my_thinker`:
   ```
   └──projeto_ia/
     ├──color-shape-links-ai-competition/
-    └──my_thinker_repository/
+    └──my_thinker/
   ```
 * Criem ou adicionem um ficheiro [`.gitignore`](.gitignore) apropriado
-  para projetos C# à pasta `my_thinker_repository`.
+  para projetos C# à pasta `my_thinker`.
 * Criem um projeto C# ([.NET Standard 2.0]) para a vossa IA -- substituam
   `Ultron` pelo nome da vossa IA nos restantes comandos até ao fim deste
   documento:
@@ -66,7 +66,7 @@ testar o _thinker_ dessa forma.
 
 ### Criar um projeto para testar o vosso _thinker_ isoladamente
 
-* Assumindo que estamos na pasta `my_thinker_repository`, criar um novo projeto
+* Assumindo que estamos na pasta `my_thinker`, criar um novo projeto
   de consola para testar o nosso _thinker_:
   ```
   dotnet new console -n TestUltron
@@ -80,8 +80,8 @@ testar o _thinker_ dessa forma.
   no Visual Studio:
   ```
   dotnet new sln
-  dotnet sln add Ultron
   dotnet sln add TestUltron
+  dotnet sln add Ultron
   ```
 * Agora podemos importar os _namespaces_ do [ColorShapeLinks] e do
   [`Ultron`](Ultron) dentro do projeto [`TestUltron`](TestUltron) e podemos
@@ -91,9 +91,9 @@ testar o _thinker_ dessa forma.
   ```
   └──projeto_ia/
      ├──color-shape-links-ai-competition/
-     └──my_thinker_repository/
+     └──my_thinker/
         ├──.gitignore
-        ├──my_thinker_repository.sln
+        ├──my_thinker.sln
         ├──TestUltron/
         └──Ultron/
   ```
@@ -104,8 +104,8 @@ testar o _thinker_ dessa forma.
   consola e não `Console.WriteLine()` ou `Debug.Log()`. O método
   [`OnThinkingInfo()`] imprime corretamente nas consolas PowerShell ou GiBash e
   na consola do Unity.
-* Usem o GitHub para terem um repositório remoto do vosso
-  `my_thinker_repository` e forneçam-me acesso ao mesmo.
+* Usem o GitHub para terem um repositório remoto do vosso repositório local
+  `my_thinker` e forneçam-me acesso ao mesmo.
 
 ## Licenças
 
