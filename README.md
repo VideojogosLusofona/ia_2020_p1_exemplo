@@ -1,52 +1,128 @@
-## Exemplo de repositório para o Projeto 1 de IA 2020/21
+# Exemplo de repositório para o Projeto 1 de IA 2020/21
 
-_Nota: os comandos seguintes foram testados no Git Bash. No Windows PowerShell
-poderão existir pequenas diferenças._
+## Introdução
 
-* Criar pasta para o repositório, fazer `cd` para dentro da mesma e inicializar
-  repositório Git.
-* Adicionar ficheiro [`.gitignore`](.gitignore) apropriado para projetos C#.
-  Este ficheiro deve também ignorar a pasta `color-shape-links-ai-competition/`.
-* Clonar o projeto ColorShapeLinks para dentro da pasta (será ignorado pelo Git
-  caso o ficheiro [`.gitignore`](.gitignore) esteja bem configurado)
+Este documento, bem como o código incluído no repositório, servem como exemplo
+de como criar um agente de IA (_thinker_) para a competição [ColorShapeLinks]
+que seja **testável isoladamente**, ou seja, que não precise de ser testado
+dentro da _framework_ de competição. É perfeitamente possível desenvolver um
+_thinker_ dentro da _framework_ de competição, tanto em consola como em Unity,
+ignorando os passos sugeridos aqui. No entanto torna-se muito mais difícil de
+testar o _thinker_ dessa forma.
+
+## Passos
+
+### Criar um projeto para o vosso _thinker_
+
+* Criem uma pasta onde colocar (1) a _framework_ [ColorShapeLinks], e, (2) o
+  repositório do vosso _thinker_:
   ```
+  mkdir projeto_ia
+  cd projeto_ia
   git clone --recurse-submodules https://github.com/VideojogosLusofona/color-shape-links-ai-competition.git
+  mkdir my_thinker_repository
+  cd my_thinker_repository
+  git init
   ```
-* Criar projeto C# ([.NET Standard 2.0]) para a vossa IA (substituam `Ultron`
-  pelo nome da vossa IA):
+* Neste momento a estrutura de pastas é a seguinte, estando nós dentro da pasta
+  `my_thinker_repository`:
+  ```
+  └──projeto_ia/
+    ├──color-shape-links-ai-competition/
+    └──my_thinker_repository/
+  ```
+* Neste momento convém criar ou adicionar um ficheiro [`.gitignore`](.gitignore)
+  apropriado para projetos C# à pasta `my_thinker_repository`.
+* Criem projeto C# ([.NET Standard 2.0]) para a vossa IA -- substituam `Ultron`
+  pelo nome da vossa IA:
   ```
   dotnet new classlib -n Ultron -f netstandard2.0
   ```
 * Adicionem uma referência à biblioteca [Common] que contém o contém todas as
   classes necessárias para desenvolverem o vosso projeto:
   ```
-  dotnet add Ultron reference color-shape-links-ai-competition/ConsoleApp/ColorShapeLinks/Common
+  dotnet add Ultron reference ../color-shape-links-ai-competition/ConsoleApp/ColorShapeLinks/Common
   ```
-* Criar ou copiar uma IA básica para a pasta [`Ultron`](Ultron) (como por
-  exemplo [esta](Ultron/UltronThinker.cs)), e verificar se funciona:
+* Criem ou copiem uma IA básica para a pasta [`Ultron`](Ultron) (como por
+  exemplo [esta](Ultron/UltronThinker.cs)), e verificar se funciona na aplicação
+  de consola do [ColorShapeLinks]:
   ```
-  dotnet build Ultron -c Release
-  dotnet run -c Release -p color-shape-links-ai-competition/ConsoleApp/ColorShapeLinks/TextBased/App -- match -a $(pwd)/Ultron/bin/Release/netstandard2.0/Ultron.dll -W ColorShapeLinks.Common.AI.Examples.RandomAIThinker -R Ultron.UltronThinker
+  dotnet build Ultron
+  dotnet run -p ../color-shape-links-ai-competition/ConsoleApp/ColorShapeLinks/TextBased/App -- match -a $(pwd)/Ultron/bin/Debug/netstandard2.0/Ultron.dll -W ColorShapeLinks.Common.AI.Examples.RandomAIThinker -R Ultron.UltronThinker
   ```
-* Também é possível testar no Unity, bastando para isso copiar a pasta
-  [`Ultron`](Ultron) para dentro da pasta
-  `color-shape-links-ai-competition/UnityApp/Assets/Scripts`.
+  * <span style="font-size:90%">_Nota:_ Se estiverem a usar PowerShell e não Git Bash, devem substituir
+  `$(pwd)` por `$pwd` no comando anterior.</span>
+* Também é possível testar na aplicação Unity do [ColorShapeLinks], bastando
+  para isso copiar os ficheiros C# na pasta [`Ultron`](Ultron) para a pasta
+  `color-shape-links-ai-competition/UnityApp/Assets/Scripts`. Isso pode ser
+  feito no Explorador de Ficheiros do Windows ou com o comando:
+  ```
+  cp Ultron/*.cs ../color-shape-links-ai-competition/UnityApp/Assets/Scripts/
+  ```
+  * <span style="font-size:90%">_Nota:_ É necessário fazer a cópia de novo cada
+    vez que atualizarem o vosso _Thinker_.</span>
 
-### Sugestões
+### Criar um projeto para testar o vosso _thinker_ isoladamente
 
-* Tentar perceber exatamente o que os comandos apresentados fazem.
-* Criar um ou mais _scripts_ para o Git Bash para não terem de escrever
-  comandos tão compridos.
-* Criar um projeto adicional de consola para testar a IA isoladamente (e já
-  agora criar uma solução para poder abrir os projetos ao mesmo tempo no VS
-  Code):
+* Assumindo que estamos na pasta `my_thinker_repository`, criar um novo projeto
+  de consola para testar o nosso _thinker_:
   ```
   dotnet new console -n TestUltron
+  ```
+* Adicionar ao novo projeto [`TestUltron`](TestUltron) uma referência ao nosso
+  _thinker_, que está no projeto [`Ultron`](Ultron):
+  ```
   dotnet add TestUltron reference Ultron
+  ```
+* Criar uma solução para que ambos os projetos possam ser abertos ao mesmo tempo
+  no Visual Studio:
+  ```
   dotnet new sln
   dotnet sln add Ultron
-  dotnet sln add Ultron
+  dotnet sln add TestUltron
+  ```
+* Agora podemos importar os _namespaces_ do [ColorShapeLinks] e do
+  [`Ultron`](Ultron) dentro do projeto [`TestUltron`](TestUltron) e podemos
+  testar o nosso _thinker_ isoladamente, ou seja, fora da _framework_ de
+  competição ([exemplo](TestUltron/Program.cs)). A estrutura de pastas é agora
+  a seguinte:
+  ```
+  └──projeto_ia/
+     ├──color-shape-links-ai-competition/
+     └──my_thinker_repository/
+        ├──.gitignore
+        ├──my_thinker_repository.sln
+        ├──TestUltron/
+        └──Ultron/
   ```
 
+### Outras sugestões
+
+* Usem o método [`OnThinkingInfo()`] dentro do vosso _thinker_ para imprimir na
+  consola e não `Console.WriteLine()` ou `Debug.Log()`. O método
+  [`OnThinkingInfo()`] imprime corretamente nas consolas PowerShell ou GiBash e
+  na consola do Unity.
+* Usem o GitHub para terem um repositório remoto do vosso
+  `my_thinker_repository` e forneçam-me acesso ao mesmo.
+
+## Licenças
+
+Todo o código neste repositório é disponibilizado através da licença [MPLv2].
+Os textos e restantes ficheiros são disponibilizados através da licença
+[CC BY-NC-SA 4.0].
+
+## Metadados
+
+* Autor: [Nuno Fachada]
+* Curso:  [Licenciatura em Videojogos][lamv]
+* Instituição: [Universidade Lusófona de Humanidades e Tecnologias][ULHT]
+
+[MPLv2]:https://opensource.org/licenses/MPL-2.0
+[CC BY-NC-SA 4.0]:https://creativecommons.org/licenses/by-nc-sa/4.0/
+[lamv]:https://www.ulusofona.pt/licenciatura/videojogos
+[Nuno Fachada]:https://github.com/fakenmc
+[ULHT ]:https://www.ulusofona.pt/
+[ColorShapeLinks]:https://github.com/VideojogosLusofona/color-shape-links-ai-competition
 [.NET Standard 2.0]:https://docs.microsoft.com/pt-pt/dotnet/standard/net-standard
 [Common]:https://videojogoslusofona.github.io/color-shape-links-ai-competition/docs/html/namespace_color_shape_links_1_1_common.html
+[`OnThinkingInfo()`]:https://videojogoslusofona.github.io/color-shape-links-ai-competition/docs/html/class_color_shape_links_1_1_common_1_1_a_i_1_1_abstract_thinker.html#a3610cd145e44a055a68076043d7b6cdc

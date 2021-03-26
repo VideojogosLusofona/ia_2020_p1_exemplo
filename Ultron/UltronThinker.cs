@@ -1,6 +1,6 @@
 /// @file
 /// @brief This file contains the ColorShapeLinks AI presented in the video
-/// tutorial.
+/// tutorial at https://youtu.be/ELrsLzX3qBY.
 ///
 /// @author Nuno Fachada
 /// @date 2020, 2021
@@ -15,7 +15,8 @@ using System;
 namespace Ultron
 {
     /// <summary>
-    /// Very basic and minimally functional AI for ColorShapeLinks.
+    /// Very basic and minimally functional AI for ColorShapeLinks based on the
+    /// tutorial video at https://youtu.be/ELrsLzX3qBY.
     /// </summary>
     public class UltronThinker : AbstractThinker
     {
