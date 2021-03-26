@@ -31,10 +31,11 @@ testar o _thinker_ dessa forma.
     ├──color-shape-links-ai-competition/
     └──my_thinker_repository/
   ```
-* Neste momento convém criar ou adicionar um ficheiro [`.gitignore`](.gitignore)
-  apropriado para projetos C# à pasta `my_thinker_repository`.
-* Criem projeto C# ([.NET Standard 2.0]) para a vossa IA -- substituam `Ultron`
-  pelo nome da vossa IA:
+* Criem ou adicionem um ficheiro [`.gitignore`](.gitignore) apropriado
+  para projetos C# à pasta `my_thinker_repository`.
+* Criem um projeto C# ([.NET Standard 2.0]) para a vossa IA -- substituam
+  `Ultron` pelo nome da vossa IA nos restantes comandos até ao fim deste
+  documento:
   ```
   dotnet new classlib -n Ultron -f netstandard2.0
   ```
@@ -50,17 +51,18 @@ testar o _thinker_ dessa forma.
   dotnet build Ultron
   dotnet run -p ../color-shape-links-ai-competition/ConsoleApp/ColorShapeLinks/TextBased/App -- match -a $(pwd)/Ultron/bin/Debug/netstandard2.0/Ultron.dll -W ColorShapeLinks.Common.AI.Examples.RandomAIThinker -R Ultron.UltronThinker
   ```
-  * <span style="font-size:90%">_Nota:_ Se estiverem a usar PowerShell e não Git Bash, devem substituir
+  * <span style="font-size:80%">_Nota:_ Se estiverem a usar PowerShell e não Git Bash, devem substituir
   `$(pwd)` por `$pwd` no comando anterior.</span>
-* Também é possível testar na aplicação Unity do [ColorShapeLinks], bastando
-  para isso copiar os ficheiros C# na pasta [`Ultron`](Ultron) para a pasta
+* Também é possível testar o vosso _thinker_ na aplicação Unity do
+  [ColorShapeLinks], bastando para isso copiar os ficheiros C# na pasta
+  [`Ultron`](Ultron) para a pasta
   `color-shape-links-ai-competition/UnityApp/Assets/Scripts`. Isso pode ser
-  feito no Explorador de Ficheiros do Windows ou com o comando:
+  feito no Explorador de Ficheiros do Windows ou com o seguinte comando:
   ```
   cp Ultron/*.cs ../color-shape-links-ai-competition/UnityApp/Assets/Scripts/
   ```
-  * <span style="font-size:90%">_Nota:_ É necessário fazer a cópia de novo cada
-    vez que atualizarem o vosso _Thinker_.</span>
+  * <span style="font-size:80%">_Nota:_ É necessário fazer a cópia de novo cada
+    vez que atualizarem o vosso _Thinker_ e o quiserem testar no Unity.</span>
 
 ### Criar um projeto para testar o vosso _thinker_ isoladamente
 
