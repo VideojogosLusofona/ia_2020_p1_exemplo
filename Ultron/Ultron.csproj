@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\color-shape-links-ai-competition\ConsoleApp\ColorShapeLinks\Common\Common.csproj" />
+    <ProjectReference Include="..\..\color-shape-links-ai-competition\ConsoleApp\ColorShapeLinks\Common\Common.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
